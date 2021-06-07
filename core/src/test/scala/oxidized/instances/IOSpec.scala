@@ -26,6 +26,7 @@ import oxidized.instances.io._
 import cats.effect.kernel.Outcome
 
 class IOSpec extends Specification with Discipline with TestInstances {
+  sequential
   implicit val ticker: Ticker = Ticker()
 
   // Terrible hack!
