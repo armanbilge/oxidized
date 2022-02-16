@@ -28,8 +28,8 @@ lazy val kernel = crossProject(JVMPlatform, JSPlatform)
   .settings(
     name := "oxidized-kernel",
     libraryDependencies ++= Seq(
-      "org.typelevel" %% "cats-core" % CatsVersion,
-      "org.typelevel" %% "cats-mtl" % CatsMtlVersion
+      "org.typelevel" %%% "cats-core" % CatsVersion,
+      "org.typelevel" %%% "cats-mtl" % CatsMtlVersion
     )
   )
 
@@ -40,8 +40,8 @@ lazy val laws = crossProject(JVMPlatform, JSPlatform)
   .settings(
     name := "oxidized-laws",
     libraryDependencies ++= Seq(
-      "org.typelevel" %% "cats-laws" % CatsVersion,
-      "org.typelevel" %% "discipline-specs2" % DisciplineVersion
+      "org.typelevel" %%% "cats-laws" % CatsVersion,
+      "org.typelevel" %%% "discipline-specs2" % DisciplineVersion
     )
   )
 
@@ -52,7 +52,7 @@ lazy val std = crossProject(JVMPlatform, JSPlatform)
   .settings(
     sonatypeCredentialHost := "s01.oss.sonatype.org",
     libraryDependencies ++= Seq(
-      "org.typelevel" %% "cats-effect-kernel" % CatsEffectVersion
+      "org.typelevel" %%% "cats-effect-kernel" % CatsEffectVersion
     )
   )
 
@@ -63,11 +63,11 @@ lazy val core = crossProject(JVMPlatform, JSPlatform)
   .settings(
     name := "oxidized",
     libraryDependencies ++= Seq(
-      "org.typelevel" %% "cats-effect" % CatsEffectVersion,
-      "org.typelevel" %% "cats-mtl" % CatsMtlVersion,
-      "org.typelevel" %% "cats-mtl-laws" % CatsMtlVersion % Test,
-      "org.typelevel" %% "cats-effect-testkit" % CatsEffectVersion % Test,
-      "org.typelevel" %% "cats-effect-testing-specs2" % "1.1.1" % Test,
-      "org.typelevel" %% "discipline-specs2" % DisciplineVersion % Test
+      "org.typelevel" %%% "cats-effect" % CatsEffectVersion,
+      "org.typelevel" %%% "cats-mtl" % CatsMtlVersion,
+      "org.typelevel" %%% "cats-mtl-laws" % CatsMtlVersion % Test,
+      "org.typelevel" %%% "cats-effect-testkit" % CatsEffectVersion % Test,
+      "org.typelevel" %%% "cats-effect-testing-specs2" % "1.4.0" % Test,
+      "org.typelevel" %%% "discipline-specs2" % DisciplineVersion % Test
     )
   )
