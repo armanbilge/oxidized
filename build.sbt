@@ -10,9 +10,10 @@ ThisBuild / startYear := Some(2021)
 
 ThisBuild / tlSonatypeUseLegacyHost := false
 
-val Scala213 = "2.13.6"
-val Scala3 = "3.0.0"
-ThisBuild / crossScalaVersions := Seq(Scala3, Scala213)
+val Scala212 = "2.12.15"
+val Scala213 = "2.13.8"
+val Scala3 = "3.1.1"
+ThisBuild / crossScalaVersions := Seq(Scala3, Scala212, Scala213)
 
 val CatsVersion = "2.7.0"
 val CatsEffectVersion = "3.3.5"
