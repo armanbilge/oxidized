@@ -5,7 +5,10 @@ ThisBuild / organizationName := "Arman Bilge"
 
 ThisBuild / organization := "com.armanbilge"
 ThisBuild / organizationName := "Arman Bilge"
-ThisBuild / developers += tlGitHubDev("armanbilge", "Arman Bilge")
+ThisBuild / developers := List(
+  tlGitHubDev("armanbilge", "Arman Bilge"),
+  tlGitHubDev("bplommer", "Ben Plommer")
+)
 ThisBuild / startYear := Some(2021)
 
 ThisBuild / tlSonatypeUseLegacyHost := false
@@ -51,7 +54,7 @@ lazy val std = crossProject(JVMPlatform, JSPlatform)
   .in(file("std"))
   .dependsOn(kernel)
   .settings(
-    sonatypeCredentialHost := "s01.oss.sonatype.org",
+    name := "oxidized-std",
     libraryDependencies ++= Seq(
       "org.typelevel" %%% "cats-effect-kernel" % CatsEffectVersion
     )
