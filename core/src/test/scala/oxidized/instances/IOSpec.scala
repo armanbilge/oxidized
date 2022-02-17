@@ -17,7 +17,7 @@
 package oxidized.instances
 
 import cats.effect.testkit.TestInstances
-import cats.mtl.laws.discipline.{HandleTests, LocalTests, StatefulTests}
+import cats.mtl.laws.discipline.{LocalTests, StatefulTests}
 import cats.effect.IOLocal
 import cats.effect.IO
 import org.specs2.mutable.Specification
@@ -36,6 +36,4 @@ class IOSpec extends Specification with Discipline with TestInstances {
   }
   checkAll("Stateful[IO]", StatefulTests[IO, Int].stateful)
   checkAll("Local[IO]", LocalTests[IO, Int].local[Int, Int])
-  checkAll("Handle[IO]", HandleTests[IO, Throwable].handle[Int])
-
 }
