@@ -24,7 +24,7 @@ val CatsMtlVersion = "1.2.1"
 val DisciplineVersion = "1.3.1"
 val Specs2Version = "4.13.3"
 
-lazy val root = tlCrossRootProject.aggregate(kernel, laws, std, core)
+lazy val root = tlCrossRootProject.aggregate(kernel, laws, core)
 
 lazy val kernel = crossProject(JVMPlatform, JSPlatform)
   .crossType(CrossType.Pure)
@@ -33,6 +33,7 @@ lazy val kernel = crossProject(JVMPlatform, JSPlatform)
     name := "oxidized-kernel",
     libraryDependencies ++= Seq(
       "org.typelevel" %%% "cats-core" % CatsVersion,
+      "org.typelevel" %%% "cats-effect-kernel" % CatsEffectVersion,
       "org.typelevel" %%% "cats-mtl" % CatsMtlVersion
     )
   )
@@ -49,21 +50,10 @@ lazy val laws = crossProject(JVMPlatform, JSPlatform)
     )
   )
 
-lazy val std = crossProject(JVMPlatform, JSPlatform)
-  .crossType(CrossType.Pure)
-  .in(file("std"))
-  .dependsOn(kernel)
-  .settings(
-    name := "oxidized-std",
-    libraryDependencies ++= Seq(
-      "org.typelevel" %%% "cats-effect-kernel" % CatsEffectVersion
-    )
-  )
-
 lazy val core = crossProject(JVMPlatform, JSPlatform)
   .crossType(CrossType.Pure)
   .in(file("core"))
-  .dependsOn(std, laws % Test)
+  .dependsOn(laws % Test)
   .settings(
     name := "oxidized",
     libraryDependencies ++= Seq(
