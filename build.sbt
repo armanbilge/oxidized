@@ -18,7 +18,7 @@ ThisBuild / crossScalaVersions := Seq(Scala3, Scala212, Scala213)
 val CatsVersion = "2.7.0"
 val CatsEffectVersion = "3.3.5"
 val CatsMtlVersion = "1.2.1"
-val DisciplineVersion = "1.1.6"
+val DisciplineVersion = "1.3.1"
 val Specs2Version = "4.13.3"
 
 lazy val root = tlCrossRootProject.aggregate(kernel, laws, std, core)
