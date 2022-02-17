@@ -16,12 +16,10 @@
 
 package oxidized.instances
 
-import cats.mtl.Stateful
+import cats.mtl.{Local, Raise, Stateful}
 import cats.effect.IO
-import cats.Monad
+import cats.{Applicative, Functor, Monad}
 import cats.effect.IOLocal
-import cats.mtl.Raise
-import cats.Functor
 
 object io extends IOInstances
 
@@ -31,6 +29,17 @@ trait IOInstances {
       override def monad: Monad[IO] = IO.asyncForIO
       override def get: IO[A] = local.get
       override def set(s: A): IO[Unit] = local.set(s)
+    }
+
+  implicit def catsMtlEffectLocalForIO[E](implicit ioLocal: IOLocal[E]): Local[IO, E] =
+    new Local[IO, E] {
+      override def local[A](fa: IO[A])(f: E => E): IO[A] = ioLocal.get.flatMap { initial =>
+        ioLocal.set(f(initial)) >> fa.guarantee(ioLocal.set(initial))
+      }
+
+      override def applicative: Applicative[IO] = IO.asyncForIO
+
+      override def ask[E2 >: E]: IO[E2] = ioLocal.get
     }
 
   implicit def catsMtlEffectRaiseForIO: Raise[IO, Throwable] =

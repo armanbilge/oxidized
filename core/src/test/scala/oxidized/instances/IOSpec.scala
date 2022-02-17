@@ -17,7 +17,7 @@
 package oxidized.instances
 
 import cats.effect.testkit.TestInstances
-import cats.mtl.laws.discipline.{HandleTests, StatefulTests}
+import cats.mtl.laws.discipline.{HandleTests, LocalTests, StatefulTests}
 import cats.effect.IOLocal
 import cats.effect.IO
 import org.specs2.mutable.Specification
@@ -30,11 +30,12 @@ class IOSpec extends Specification with Discipline with TestInstances {
   implicit val ticker: Ticker = Ticker()
 
   // Terrible hack!
-  implicit val local: IOLocal[Int] = unsafeRun(IOLocal(0)) match {
+  implicit val l: IOLocal[Int] = unsafeRun(IOLocal(0)) match {
     case Outcome.Succeeded(Some(local)) => local
     case _ => throw new RuntimeException
   }
   checkAll("Stateful[IO]", StatefulTests[IO, Int].stateful)
+  checkAll("Local[IO]", LocalTests[IO, Int].local[Int, Int])
   checkAll("Handle[IO]", HandleTests[IO, Throwable].handle[Int])
 
 }

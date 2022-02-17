@@ -4,4 +4,4 @@ A microlibrary of [MTL](https://github.com/typelevel/cats-mtl) typeclasses and i
 
 * `oxidized-kernel`: `ConcurrentStateful` typeclass that relaxes the laws of `Stateful`
 * `oxidized-std`: `ConcurrentStateful` for `F` via a `Ref`
-* `oxidized`: all of the above, plus `Raise` and `Stateful` via an `IOLocal` for `IO`
+* `oxidized`: all of the above, plus `Raise`, `Local` and `Stateful` via an `IOLocal` for `IO`
