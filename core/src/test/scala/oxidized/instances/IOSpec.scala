@@ -30,7 +30,7 @@ class IOSpec extends Specification with Discipline with TestInstances {
   implicit val ticker: Ticker = Ticker()
 
   // Terrible hack!
-  implicit val l: IOLocal[Int] = unsafeRun(IOLocal(0)) match {
+  implicit val local: IOLocal[Int] = unsafeRun(IOLocal(0)) match {
     case Outcome.Succeeded(Some(local)) => local
     case _ => throw new RuntimeException
   }
