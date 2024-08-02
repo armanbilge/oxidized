@@ -14,22 +14,32 @@
  * limitations under the License.
  */
 
-package oxidized.laws
+package oxidized
+package laws
 
-import oxidized.ConcurrentStateful
-import cats.Functor
+import cats.Monad
+import cats.effect.kernel.Unique
+import cats.kernel.laws.IsEq
+import cats.syntax.all._
 
 trait ConcurrentStatefulLaws[F[_], S] {
-  implicit def stateInstance: ConcurrentStateful[F, S]
-  implicit def functor: Functor[F] = stateInstance.functor
+  implicit def concurrentStateful: ConcurrentStateful[F, S]
+  implicit def monad: Monad[F] = concurrentStateful.monad
+  implicit def unique: Unique[F] = concurrentStateful.unique
 
-  // TODO
+  def setThenSetOverwritesFirst: F[Boolean] = for {
+    u1 <- unique.unique
+    u2 <- unique.unique
+    _ <- concurrentStateful.set(u1)
+    _ <- concurrentStateful.set(u2)
+    got <- concurrentStateful.get
+  } yield got != u1
 }
 
 object ConcurrentStatefulLaws {
   def apply[F[_], S](
-      implicit instance0: ConcurrentStateful[F, S]): ConcurrentStatefulLaws[F, S] =
+      implicit cs: ConcurrentStateful[F, S]): ConcurrentStatefulLaws[F, S] =
     new ConcurrentStatefulLaws[F, S] {
-      override val stateInstance: ConcurrentStateful[F, S] = instance0
+      val concurrentStateful = cs
     }
 }
